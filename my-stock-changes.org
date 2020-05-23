@@ -322,66 +322,69 @@
 *** Eshell
     Introduce some eshell keybindings.
     #+BEGIN_SRC emacs-lisp
-      (add-hook 'eshell-mode-hook '(lambda ()
-        			     ;; Make the eshell behave like a normal shell
-                                     (local-set-key (kbd "C-p") 'eshell-previous-input)
-                                     (local-set-key (kbd "M-p") 'previous-line)
-        			     (local-set-key (kbd "C-n") 'eshell-next-input)
-                                     (local-set-key (kbd "M-n") 'next-line)
-        			     (setq pcomplete-cycle-completions nil)
-        			     ))
-      (global-set-key (kbd "C-c e") 'eshell)
+(add-hook 'eshell-mode-hook '(lambda ()
+                               ;; Make the eshell behave like a normal shell
+                               (local-set-key (kbd "C-p") 'eshell-previous-input)
+                               (local-set-key (kbd "M-p") 'previous-line)
+                               (local-set-key (kbd "C-n") 'eshell-next-input)
+                               (local-set-key (kbd "M-n") 'next-line)
+                               (setq pcomplete-cycle-completions nil)
+                               ))
+(global-set-key (kbd "C-c e") 'eshell)
     #+END_SRC
+
 
     Visual commands are commands which require a proper terminal (dont work well in eshell
     itself). Eshell will run them in a term buffer when you invoke them.
     #+BEGIN_SRC emacs-lisp
-      (setq eshell-visual-commands
-            '("less" "tmux" "htop" "top" "bash" "zsh" "fish"))
-      (setq eshell-visual-subcommands
-            '(("git" "log" "l" "diff" "show")))
+(setq eshell-visual-commands
+      '("less" "tmux" "htop" "top" "bash" "zsh" "fish"))
+(setq eshell-visual-subcommands
+      '(("git" "log" "l" "diff" "show")))
     #+END_SRC
 
 
     Basic coloring (sadly doesnt work for aliases even with the --color flag).
-    #+BEGIN_SRC emacs-lisp
-      (custom-set-faces
-       '(eshell-ls-archive ((t (:foreground "gold1" :weight bold))))
-       '(eshell-ls-backup ((t (:foreground "LemonChiffon1"))))
-       '(eshell-ls-directory ((t (:foreground "brown1" :weight bold))))
-       '(eshell-prompt ((t (:foreground "firebrick" :weight bold))))
-       )
+    #+BEGIN_SRC emacs-lisp :tangle no
+(custom-set-faces
+ '(eshell-ls-archive ((t (:foreground "gold1" :weight bold))))
+ '(eshell-ls-backup ((t (:foreground "LemonChiffon1"))))
+ '(eshell-ls-directory ((t (:foreground "brown1" :weight bold))))
+ '(eshell-prompt ((t (:foreground "firebrick" :weight bold))))
+ )
     #+END_SRC
+
 
     Attempts to make a good looking git-prompt in eshell. Breaks my windows emacs since it cant
     display the characters used for styling, therefor untangled.
     #+BEGIN_SRC emacs-lisp :tangle no
-      (use-package eshell-git-prompt
-        :ensure t
-        :config
-        (require 'powerline)
-        (eshell-git-prompt-use-theme 'powerline))
+(use-package eshell-git-prompt
+  :ensure t
+  :config
+  (require 'powerline)
+  (eshell-git-prompt-use-theme 'powerline))
     #+END_SRC
+
 
     Fancy eshell looks. (Taken from here:
     https://www.reddit.com/r/emacs/comments/6f0rkz/my_fancy_eshell_prompt/) Curretly untangled
     since the colors are too bright.
     #+BEGIN_SRC emacs-lisp :tangle no
-      (setq eshell-prompt-function
-            (lambda ()
-              (concat
-               (propertize "┌─[" 'face `(:foreground "green"))
-               (propertize (user-login-name) 'face `(:foreground "red"))
-               (propertize "@" 'face `(:foreground "green"))
-               (propertize (system-name) 'face `(:foreground "dodger blue"))
-               (propertize "]──[" 'face `(:foreground "green"))
-               (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
-               (propertize "]──[" 'face `(:foreground "green"))
-               (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
-               (propertize "]\n" 'face `(:foreground "green"))
-               (propertize "└─>" 'face `(:foreground "green"))
-               (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
-               )))
+(setq eshell-prompt-function
+      (lambda ()
+        (concat
+         (propertize "┌─[" 'face `(:foreground "green"))
+         (propertize (user-login-name) 'face `(:foreground "red"))
+         (propertize "@" 'face `(:foreground "green"))
+         (propertize (system-name) 'face `(:foreground "dodger blue"))
+         (propertize "]──[" 'face `(:foreground "green"))
+         (propertize (format-time-string "%H:%M" (current-time)) 'face `(:foreground "yellow"))
+         (propertize "]──[" 'face `(:foreground "green"))
+         (propertize (concat (eshell/pwd)) 'face `(:foreground "white"))
+         (propertize "]\n" 'face `(:foreground "green"))
+         (propertize "└─>" 'face `(:foreground "green"))
+         (propertize (if (= (user-uid) 0) " # " " $ ") 'face `(:foreground "green"))
+         )))
     #+END_SRC
 
 *** Disable Secondary selection
