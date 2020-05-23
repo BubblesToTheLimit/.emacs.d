@@ -37,6 +37,14 @@
   #+END_SRC
 
 
+  Set a ~SYSENV~ default. Useful for my Mac where I can't seem to set an environment variable for
+  my emacsclient installation.
+  #+BEGIN_SRC emacs-lisp
+    (if (equal (getenv "SYSENV") nil)
+        (setenv "SYSENV" "home"))
+  #+END_SRC
+
+
   Detect the ~SYSENV~ based on the wifi.
   #+BEGIN_SRC emacs-lisp
 (message "Updating the SYSENV based on the connected wifi...")
