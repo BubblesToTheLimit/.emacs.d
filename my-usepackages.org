@@ -379,7 +379,7 @@
 ** Flyspell                                                   :sysenv:
    Prerequisite on ubuntu is the following
    #+BEGIN_SRC sh :tangle no :results silent
-   sudo apt-get install aspell-de
+sudo apt-get install aspell-de
    #+END_SRC
 
 
@@ -387,38 +387,38 @@
    actually not that crucial. Also writing german and english in the same document seems confusing
    for flyspell (as for every / most grammar correction programms).
    #+BEGIN_SRC emacs-lisp :tangle no
-     (if (equal "home" (getenv "SYSENV"))
-         (add-hook 'org-mode-hook 'turn-on-flyspell)
-     )
+(if (equal "home" (getenv "SYSENV"))
+    (add-hook 'org-mode-hook 'turn-on-flyspell)
+  )
    #+END_SRC
 
 
    The flyspell settings for work and home, requires a manual "aspell" installation.
    - https://www.emacswiki.org/emacs/FlySpell
    #+BEGIN_SRC emacs-lisp
-     (use-package flyspell
-       :if (or (equal "home" (getenv "SYSENV")) (equal "work" (getenv "SYSENV")))
-       :config
-       (if (string-equal system-type "windows-nt") (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
-       (setq ispell-program-name "aspell")
-       (global-set-key (kbd "<f8>") 'ispell-word)
-       (global-set-key (kbd "C-<f8>") 'flyspell-mode)
-       )
+(use-package flyspell
+  :if (or (equal "home" (getenv "SYSENV")) (equal "work" (getenv "SYSENV")))
+  :config
+  (if (string-equal system-type "windows-nt") (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
+  (setq ispell-program-name "aspell")
+  (global-set-key (kbd "<f8>") 'ispell-word)
+  (global-set-key (kbd "C-<f8>") 'flyspell-mode)
+  )
    #+END_SRC
 
 
    Exclude src-blocks from ispell spell-checking. Taken from here:
    https://github.com/jkitchin/jmax/blob/master/jmax.el
    #+BEGIN_SRC sh
-     (add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
-     (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
-     (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
-     (add-to-list 'ispell-skip-region-alist '("cite:" . " "))
-     (add-to-list 'ispell-skip-region-alist '("label:" . " "))
-     (add-to-list 'ispell-skip-region-alist '("ref:" . " "))
-     (add-to-list 'ispell-skip-region-alist '("=" . "="))
-     (add-to-list 'ispell-skip-region-alist '("~" . "~"))
-     (add-to-list 'ispell-skip-region-alist '(":RESULTS:" . ":END:"))
+(add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+(add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+(add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+(add-to-list 'ispell-skip-region-alist '("cite:" . " "))
+(add-to-list 'ispell-skip-region-alist '("label:" . " "))
+(add-to-list 'ispell-skip-region-alist '("ref:" . " "))
+(add-to-list 'ispell-skip-region-alist '("=" . "="))
+(add-to-list 'ispell-skip-region-alist '("~" . "~"))
+(add-to-list 'ispell-skip-region-alist '(":RESULTS:" . ":END:"))
    #+END_SRC
 
 
@@ -440,13 +440,14 @@
     (setq ad-return-value rlt)))
    #+END_SRC
 
+
    #+BEGIN_SRC emacs-lisp
 (use-package flyspell-correct-helm
-:ensure t
-:config
-(require 'flyspell-correct-helm)
-(define-key flyspell-mode-map (kbd "C-;") 'flyspell-correct-previous-word-generic)
-)
+  :ensure t
+  :config
+  (require 'flyspell-correct-helm)
+  (define-key flyspell-mode-map (kbd "C-;") 'flyspell-correct-previous-word-generic)
+  )
    #+END_SRC
 
 ** Copy-clipboard hack
