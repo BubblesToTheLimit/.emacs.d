@@ -2196,17 +2196,6 @@ sudo gem install puppet-lint
 
 ** Python programming
 
-   #+BEGIN_SRC emacs-lisp
-(use-package jedi
-  :ensure t
-  :config
-  (add-hook 'python-mode-hook 'jedi:setup)
-  (setq jedi:setup-keys t)
-  (setq jedi:complete-on-dot t)
-  )
-   #+END_SRC
-
-
    Disable the eldoc-mode which brings up that python-help buffer everytime:
    #+BEGIN_SRC emacs-lisp
 (global-eldoc-mode -1)
