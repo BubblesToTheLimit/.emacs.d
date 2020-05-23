@@ -1610,17 +1610,17 @@ Inside a code-block, just call `self-insert-command'."
 *** Enable R codeblocks                              :research:sysenv:
     For this to work i had to install the ess-package:
     #+BEGIN_SRC sh :tangle no
-    sudo apt-get install ess
+sudo apt-get install ess
     #+END_SRC
 
     After installation of ess the following works.
-    #+BEGIN_SRC emacs-lisp
-      (if (equal "home" (getenv "SYSENV"))
-          (progn
-            ;; found out about the path with dpkg -L ess
-            (add-to-list 'load-path "/usr/share/emacs/site-lisp/ess/")
-            (require 'ess-site))
-        )
+    #+BEGIN_SRC emacs-lisp :tangle no
+(if (equal "home" (getenv "SYSENV"))
+    (progn
+      ;; found out about the path with dpkg -L ess
+      (add-to-list 'load-path "/usr/share/emacs/site-lisp/ess/")
+      (require 'ess-site))
+  )
     #+END_SRC
 
     In addition we also need to load the org-babel language R over here:
