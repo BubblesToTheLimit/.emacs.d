@@ -36,12 +36,12 @@
 (setq elfeed-db-directory "~/Dropbox/org/elfeed/db/")
   #+END_SRC
 
-
+* SYSENV Setup                                                :sysenv:
   Set a ~SYSENV~ default. Useful for my Mac where I can't seem to set an environment variable for
   my emacsclient installation.
   #+BEGIN_SRC emacs-lisp
-    (if (equal (getenv "SYSENV") nil)
-        (setenv "SYSENV" "home"))
+(if (equal (getenv "SYSENV") nil)
+    (setenv "SYSENV" "home"))
   #+END_SRC
 
 
@@ -51,6 +51,14 @@
 (setq home-wifi "FRITZ!Box 7530 RG\n")
 (if (string-equal home-wifi (shell-command-to-string "nmcli -g NAME connection show --active"))
     (setenv "SYSENV" "home"))
+  #+END_SRC
+
+
+  #+BEGIN_SRC emacs-lisp
+(if (or (string-equal system-type "gnu/linux") (string-equal system-type "darwin"))
+    (setq fbr/home-dir "~"))
+(if (string-equal system-type "windows-nt")
+  (setq fbr/home-dir (concat "C:/Users/" (getenv "USERNAME"))))
   #+END_SRC
 
 * Keyboard macros
@@ -176,14 +184,8 @@
           (equal "work" (getenv "SYSENV"))
        )
   :config
-  (setq deft-extensions '("txt" "tex" "org"))
-  (if (equal "work" (getenv "SYSENV"))
-      (progn (setq deft-directory (concat "~/Documents")))
-      )
-  (if (or (equal "home" (getenv "SYSENV")))
-      (progn (setq deft-directory "~/Dropbox/org"))
-    )
-  (setq deft-directory "~/Dropbox/org")
+  (setq deft-extensions '("txt" "tex" "org" "md"))
+  (setq deft-directory (concat fbr/home-dir "/Dropbox/org"))
   (setq deft-recursive t)
   (setq deft-use-filename-as-title t)
   )
@@ -552,7 +554,7 @@
         (save-some-buffers)
         (if (equal "home" (getenv "SYSENV"))
             (progn
-              (setq fbr/my-git-dir (concat "C:\\Users\\" (getenv "USERNAME") "\\Dropbox\\org\\gtd\\"))
+              (setq fbr/my-git-dir (concat fbr/home-dir "/Dropbox/org/gtd/"))
               (shell-command (concat "git --work-tree " fbr/my-git-dir " --git-dir " fbr/my-git-dir ".git commit -a -m 'autocommit'"))
               (shell-command (concat "git --work-tree " fbr/my-git-dir " --git-dir " fbr/my-git-dir ".git push backup master"))
               ))
@@ -737,60 +739,63 @@
 
 ***** Home
        #+BEGIN_SRC emacs-lisp
-       (if (equal "home" (getenv "SYSENV"))
-           (progn (setq org-agenda-files (list
-                                          (concat "/root/Dropbox/org/gtd/tasks.org")
-                                          (concat "/root/Dropbox/org/gtd/tasks.org_archive")
-                                          (concat "/root/Dropbox/org/hobby/dactyl-keyboard/dactyl-keyboard-guide/index.org")
-                                          (concat "/root/Dropbox/org/uni/bachelor_thesis/bachelor_thesis.org")
-                                          (concat "/root/Dropbox/org/gtd/tasks_2015")
-                                          (concat "/root/Dropbox/org/gtd/tasks_2016")
-                                          (concat "/root/Dropbox/org/gtd/tasks_2017")
-                                          ))
-              ;; org-capture setup
-              (setq org-default-notes-file (concat "/root/Dropbox/org/gtd/tasks.org"))
-              (setq org-capture-templates
-                    '(("t" "todo" entry (file+headline org-default-notes-file "Events / Aufgaben")
-                       "* TODO %?\n  New task appeared on: %u\n  Interrupted from doing: %a. Click to get back.\n" :clock-in t :clock-resume t)
-                      ("m" "Meeting" entry (file+headline org-default-notes-file "Events / Aufgaben")
-                       "* Meeting mit %? :meeting:\n%t" :clock-in t :clock-resume t)
-                      ("i" "Idea" entry (file+headline org-default-notes-file "Events / Aufgaben")
-                       "* %? :idea: \n%t" :clock-in t :clock-resume t)
-                      )
-                    )
-              (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
-                  )
-         )
+(if (equal "home" (getenv "SYSENV"))
+    (progn
+      (setq org-agenda-files
+            (list
+             (concat fbr/home-dir "/Dropbox/org/gtd/tasks.org")
+             (concat fbr/home-dir "/Dropbox/org/gtd/tasks.org_archive")
+             (concat fbr/home-dir "/Dropbox/org/hobby/dactyl-keyboard/dactyl-keyboard-guide/index.org")
+             (concat fbr/home-dir "/Dropbox/org/uni/bachelor_thesis/bachelor_thesis.org")
+             (concat fbr/home-dir "/Dropbox/org/gtd/tasks_2015")
+             (concat fbr/home-dir "/Dropbox/org/gtd/tasks_2016")
+             (concat fbr/home-dir "/Dropbox/org/gtd/tasks_2017")
+             ))
+      ;; org-capture setup
+      (setq org-default-notes-file (concat fbr/home-dir "/Dropbox/org/gtd/tasks.org"))
+      (setq org-capture-templates
+            '(("t" "todo" entry (file+headline org-default-notes-file "Events / Aufgaben")
+               "* TODO %?\n  New task appeared on: %u\n  Interrupted from doing: %a. Click to get back.\n" :clock-in t :clock-resume t)
+              ("m" "Meeting" entry (file+headline org-default-notes-file "Events / Aufgaben")
+               "* Meeting mit %? :meeting:\n%t" :clock-in t :clock-resume t)
+              ("i" "Idea" entry (file+headline org-default-notes-file "Events / Aufgaben")
+               "* %? :idea: \n%t" :clock-in t :clock-resume t)
+              )
+            )
+      (setq org-refile-targets '((org-agenda-files . (:maxlevel . 6))))
+      )
+  )
        #+END_SRC
 
 ***** Work
-       #+BEGIN_SRC emacs-lisp
-        (if (equal "work" (getenv "SYSENV"))
-            (progn (setq org-agenda-files
-                         (list (concat "~/Documents/org/projects.org")))
-                   ;; org-capture setup
-                   (setq org-default-notes-file (concat "C:\\Users\\" (getenv "USERNAME") "\\Desktop\\Projekte\\org\\projects.org"))
-                   (setq org-capture-templates
-                         '(("t" "todo" entry (file+headline org-default-notes-file "Aufgaben")
-                            "* TODO %?\n  New task appeared on: %u\n  Interrupted from doing: %a. Click to get back.\n" :clock-in t :clock-resume t)
-                           ("m" "Meeting" entry (file+headline org-default-notes-file "Aufgaben")
-                            "* Meeting mit %? :meeting:\n%t" :clock-in t :clock-resume t)
-                           ("i" "Idea" entry (file+headline org-default-notes-file "Aufgaben")
-                            "* %? :idea: \n%t" :clock-in t :clock-resume t)
-                           )
-                         )
-                   (setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
-                   )
-          )
-        #+END_SRC
+      #+BEGIN_SRC emacs-lisp
+(if (equal "work" (getenv "SYSENV"))
+    (progn
+      (setq org-agenda-files
+            (list (concat fbr/home-dir "/Dropbox/work/org/projects.org")))
+      ;; org-capture setup
+      (setq org-default-notes-file (concat fbr/home-dir "/Dropbox/work/org/projects.org"))
+      (setq org-capture-templates
+            '(("t" "todo" entry (file+headline org-default-notes-file "Aufgaben")
+               "* TODO %?\n  New task appeared on: %u\n  Interrupted from doing: %a. Click to get back.\n" :clock-in t :clock-resume t)
+              ("m" "Meeting" entry (file+headline org-default-notes-file "Aufgaben")
+               "* Meeting mit %? :meeting:\n%t" :clock-in t :clock-resume t)
+              ("i" "Idea" entry (file+headline org-default-notes-file "Aufgaben")
+               "* %? :idea: \n%t" :clock-in t :clock-resume t)
+              )
+            )
+      (setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
+      )
+  )
+      #+END_SRC
 
 ***** Shortcut to open my main agenda file
       #+BEGIN_SRC emacs-lisp
        (defun fbr/open_main_agenda_file()
          (interactive)
          (case (intern (getenv "SYSENV"))
-           (home (find-file "~/Dropbox/org/gtd/tasks.org"))
-           (work (find-file "~/Documents/org/projects.org"))
+           (home (find-file (concat fbr/home-dir "/Dropbox/org/gtd/tasks.org")))
+           (work (find-file (concat fbr/home-dir "/Dropbox/work/org/projects.org")))
            (otherwise (message "No SYSENV found. Don't know what to open."))
            )
          )
@@ -1505,10 +1510,10 @@
        (if (equal "home" (getenv "SYSENV"))
            (progn
              ;; see org-ref for use of these variables
-             (setq org-ref-bibliography-notes "~/Dropbox/org/uni/bachelor_thesis/notes.org"
-                   org-ref-default-bibliography '("~/Dropbox/org/uni/bachelor_thesis/bachelor_thesis.bib")
-                   org-ref-pdf-directory "~/Dropbox/org/uni/bachelor_thesis/"
-                   org-ref-pdf-directory "~/Dropbox/org/uni/bachelor_thesis/bibtex-pdfs/"
+             (setq org-ref-bibliography-notes (concat fbr/home-dir "/Dropbox/org/uni/bachelor_thesis/notes.org")
+                   org-ref-default-bibliography '((concat fbr/home-dir "/Dropbox/org/uni/bachelor_thesis/bachelor_thesis.bib"))
+                   org-ref-pdf-directory (concat fbr/home-dir "/Dropbox/org/uni/bachelor_thesis/")
+                   org-ref-pdf-directory (concat fbr/home-dir "/Dropbox/org/uni/bachelor_thesis/bibtex-pdfs/")
                    )
              )
          )
