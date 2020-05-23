@@ -547,7 +547,7 @@ sudo apt-get install aspell-de
     i can go back into the file-history to bring it back. The emacs backup-files dont help in this
     scenario.
 
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       ;; define function to shutdown emacs server instance
       (defun server-shutdown ()
         "Save buffers, Quit, and Shutdown (kill) server"
