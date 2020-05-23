@@ -380,6 +380,7 @@
    sudo apt-get install aspell-de
    #+END_SRC
 
+
    I dont use this hook right now since it slow editing down a bit and correct spelling is
    actually not that crucial. Also writing german and english in the same document seems confusing
    for flyspell (as for every / most grammar correction programms).
@@ -389,18 +390,20 @@
      )
    #+END_SRC
 
+
    The flyspell settings for work and home, requires a manual "aspell" installation.
    - https://www.emacswiki.org/emacs/FlySpell
    #+BEGIN_SRC emacs-lisp
      (use-package flyspell
        :if (or (equal "home" (getenv "SYSENV")) (equal "work" (getenv "SYSENV")))
        :config
-       (if (equal "home" (getenv "SYSENV")) (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
+       (if (string-equal system-type "windows-nt") (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
        (setq ispell-program-name "aspell")
        (global-set-key (kbd "<f8>") 'ispell-word)
        (global-set-key (kbd "C-<f8>") 'flyspell-mode)
        )
    #+END_SRC
+
 
    Exclude src-blocks from ispell spell-checking. Taken from here:
    https://github.com/jkitchin/jmax/blob/master/jmax.el
@@ -415,6 +418,7 @@
      (add-to-list 'ispell-skip-region-alist '("~" . "~"))
      (add-to-list 'ispell-skip-region-alist '(":RESULTS:" . ":END:"))
    #+END_SRC
+
 
    Exclude src-blocks from flyspell spell-checking. Taken from here:
    https://emacs.stackexchange.com/questions/9333/how-does-one-use-flyspell-in-org-buffers-without-flyspell-triggering-on-tangled
@@ -492,11 +496,12 @@
      (use-package magit
        :ensure t
        :config
-       (add-to-list 'exec-path "C:/Program Files/Git/bin")
+       (if (string-equal system-type "windows-nt") (add-to-list 'exec-path "C:/Program Files/Git/bin"))
        (setenv "GIT_ASKPASS" "git-gui--askpass")
        :defer 5
        )
    #+END_SRC
+
 
    Also use this:
    #+BEGIN_SRC emacs-lisp
@@ -504,6 +509,7 @@
        :ensure t
        )
    #+END_SRC
+
 
    #+BEGIN_SRC emacs-lisp
      (use-package magit-todos
@@ -513,11 +519,13 @@
        )
    #+END_SRC
 
+
    magit-gitflow is a cool addition to magit
    #+BEGIN_SRC sh :tangle no
    # install requirements for magit-gitflow on ubuntu
    sudo apt-get install git-flow
    #+END_SRC
+
 
    #+BEGIN_SRC emacs-lisp
    (use-package magit-gitflow
