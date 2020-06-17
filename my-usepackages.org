@@ -2118,6 +2118,25 @@ sudo apt-get install ess
   )
    #+END_SRC
 
+** Terraform
+
+   #+BEGIN_SRC emacs-lisp
+(use-package company-terraform
+  :ensure t
+  :init
+  (company-terraform-init)
+  :config
+  (add-hook 'terraform-mode-hook (lambda () (company-mode)))
+  )
+   #+END_SRC
+
+   Other hooks:
+   #+BEGIN_SRC emacs-lisp
+   (add-hook 'terraform-mode-hook (lambda () (linum-mode)))
+   (add-hook 'terraform-mode-hook (lambda () (flycheck-mode)))
+   (setq flycheck-terraform-tflint-executable "/usr/local/bin/tflint")
+   #+END_SRC
+
 ** Jenkins Groovy
    #+BEGIN_SRC emacs-lisp
    (setq groovy-indent-offset 2)
