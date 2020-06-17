@@ -2061,6 +2061,17 @@ sudo apt-get install ess
    (add-hook 'yaml-mode-hook (lambda () (linum-mode)))
    #+END_SRC
 
+** Highlight todo, fixme, etc.
+   #+BEGIN_SRC emacs-lisp
+(setq hl-todo-keyword-faces
+      '(("TODO"   . "#efe4a1")
+        ("FIXME"  . "#ff5faf")
+        ("DEBUG"  . "#1E90FF")
+        ("GOTCHA" . "#1E90FF")
+        ("STUB"   . "#1E90FF")))
+(global-hl-todo-mode)
+   #+END_SRC
+
 ** CloudFormation
    #+BEGIN_SRC emacs-lisp
 (defun bba-aws-cfn-lint()
