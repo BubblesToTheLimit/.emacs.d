@@ -1029,11 +1029,11 @@ meaning:
   "use-package statistics"
   "Show current statistics gathered about use-package declarations."
   (setq tabulated-list-format
-        ;; The sum of column width is 80 caracters:
-        #[("Package" 25 t)
-          ("Status" 13 t)
-          ("Last Event" 23 t)
-          ("Time" 10 t)])
+        ;; The sum of column width is 80 characters:
+        [("Package" 25 t)
+         ("Status" 13 t)
+         ("Last Event" 23 t)
+         ("Time" 10 t)])
   (tabulated-list-init-header))
 
 (defun use-package-statistics-gather (keyword name after)
@@ -1468,7 +1468,7 @@ no keyword implies `:all'."
     (use-package-concat
      (when use-package-compute-statistics
        `((use-package-statistics-gather :config ',name nil)))
-     (if (or (null arg) (equal arg '(t)))
+     (if (and (or (null arg) (equal arg '(t))) (not use-package-inject-hooks))
          body
        (use-package-with-elapsed-timer
            (format "Configuring package %s" name-symbol)
@@ -1548,9 +1548,11 @@ this file.  Usage:
                  `:magic-fallback', or `:interpreter'.  This can be an integer,
                  to force loading after N seconds of idle time, if the package
                  has not already been loaded.
-:after           Defer loading of a package until after any of the named
-                 features are loaded.
-:demand          Prevent deferred loading in all cases.
+:after           Delay the use-package declaration until after the named modules
+                 have loaded. Once load, it will be as though the use-package
+                 declaration (without `:after') had been seen at that moment.
+:demand          Prevent the automatic deferred loading introduced by constructs
+                 such as `:bind' (see `:defer' for the complete list).
 
 :if EXPR         Initialize and load only if EXPR evaluates to a non-nil value.
 :disabled        The package is ignored completely if this keyword is present.
