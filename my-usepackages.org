@@ -2267,9 +2267,43 @@ sudo gem install puppet-lint
   Themes usually dont touch the helm-interface, for that there is a package called "helm-themes"
   and it usually makes sense to load the helm-theme along with the "main" theme.
 
+  Search for "current theme". Cool themes:
+  - afternoon-theme
+  - ample-zen-theme
+  - challenger-deep-theme
+  - cherry-blossom-theme
+  - cyberpunk-theme
+  - flatland-theme
+  - github-theme
+  - night-owl-theme
+  - zenburn-theme
+
+  Themes i never used for long
+  - alect-themes
+  - avk-emacs-themes
+  - dark-mint-theme
+  - dracula-theme
+  - eziam-theme
+  - kaolin-theme
+  - moe-theme
+  - occidental-theme
+  - oceanic-theme
+  - solarized-theme
+  - twilight-bright-theme
+
+
+  Current theme:
+  #+BEGIN_SRC emacs-lisp
+  (use-package flatland-theme
+  :ensure t
+  :config
+  (load-theme 'flatland t)
+  )
+  #+END_SRC
+
 ** Rebecca theme
-   #+BEGIN_SRC emacs-lisp
-   (use-package rebecca-theme ;; current theme
+   #+BEGIN_SRC emacs-lisp :tangle no
+   (use-package rebecca-theme
    :ensure t
    :config
    (load-theme 'rebecca t)
@@ -2289,33 +2323,6 @@ sudo gem install puppet-lint
          )
          )
     #+END_SRC
-
-** Night-owl theme
-   #+BEGIN_SRC emacs-lisp :tangle no
-   (use-package night-owl-theme
-   :ensure t
-   :config
-   (load-theme 'night-owl t)
-   )
-   #+END_SRC
-
-** Afternoon theme
-   #+BEGIN_SRC emacs-lisp :tangle no
-   (use-package afternoon-theme
-   :ensure t
-   :config
-   (load-theme 'afternoon t)
-   )
-   #+END_SRC
-
-** Cherryblossom
-   #+BEGIN_SRC emacs-lisp :tangle no
-   (use-package cherry-blossom-theme
-   :ensure t
-   :config
-   (load-theme 'cherry-blossom t)
-   )
-   #+END_SRC
 
 ** Seti theme
    I used this theme for a long time and it is pretty good, but sometimes i have to mix it up!
@@ -2376,37 +2383,6 @@ sudo gem install puppet-lint
     bunch of settings in the theme inherit from this face. I guess i have to fix this or use a
     different theme.
 
-** Eziam theme
-   This is a new-comer, the grayscaling really is a new take on themes for me and the
-   source-blocks look much nicer. However headlines in org-mode are really chunky and I'm not used
-   to that yet.
-
-   #+BEGIN_SRC emacs-lisp :results silent :tangle no
-     (use-package eziam-theme
-       :ensure t
-       :init
-       ;; alternative for loading the manually downloaded package
-       ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/eziam-emacs-theme")
-       (load-theme 'eziam-light t)
-       )
-   #+END_SRC
-
-   For installation execute the following:
-   #+BEGIN_SRC sh :dir ~/.emacs.d/themes :results silent :tangle no
-     rm -rf eziam-theme-emacs #makes sure the directory is clean
-     git clone https://github.com/thblt/eziam-theme-emacs.git
-   #+END_SRC
-
-** zenburn theme
-   A really classy but kind of dirty / muddy theme.
-   #+BEGIN_SRC emacs-lisp :results silent :tangle no
-     (use-package zenburn-theme
-       :ensure t
-       :config
-       (load-theme 'zenburn t)
-     )
-   #+END_SRC
-
 ** Sanityinc tomorrow
    #+BEGIN_SRC emacs-lisp :tangle no
    (use-package color-theme-sanityinc-tomorrow
@@ -2426,120 +2402,6 @@ sudo gem install puppet-lint
    (if (equal "work" (getenv "SYSENV"))
      (set-frame-font "-PfEd-DejaVu Sans Mono-normal-normal-normal-*-16-*-*-*-m-0-iso10646-1"))
    )
-   #+END_SRC
-
-** Challenger-Deep theme
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package challenger-deep-theme
-       :ensure t
-       :config
-       (load-theme 'challenger-deep t)
-       )
-   #+END_SRC
-
-** Themes i never used for long
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (load-file "~/.emacs.d/elpa/kaolin-theme/kaolin-theme.el")
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package dracula-theme
-       :ensure t
-       :config
-       (load-theme 'dracula t)
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package occidental-theme
-       :ensure t
-       :config
-       (load-theme 'adwaita t)
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package alect-themes
-       :ensure t
-       :config
-       (load-theme 'alect-black t)
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package dark-mint-theme
-       :ensure t
-       :config
-       (load-theme 'dark-mint t)
-       )
-   #+END_SRC
-
-   Seems not to have a good contrast even though the color palette works together well.
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package twilight-bright-theme
-       :ensure t
-       :config
-       (load-theme 'twilight-bright t)
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle
-     (use-package oceanic-theme
-       :ensure t
-       :config
-       (load-theme 'oceanic t)
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package avk-emacs-themes
-        :ensure t
-        :config
-        (load-theme 'avk-darkblue-white t)
-        )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package solarized-theme
-       :ensure t
-       :config
-       (load-theme 'solarized-dark t)
-       (set-frame-parameter nil 'background-mode 'dark)
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package challenger-deep-theme
-       :ensure t
-       )
-   #+END_SRC
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package moe-theme
-     :ensure t
-     :config
-     (load-theme 'moe-dark t)
-     )
-   #+END_SRC
-
-** Ample-zen theme
-   #+BEGIN_SRC emacs-lisp :tangle no
-(use-package ample-zen-theme
-  :ensure t
-  :config
-  (load-theme 'ample-zen t)
-)
-   #+END_SRC
-
-** Cyperpunk theme
-   Awesome theme with flashy colors. Something nice to come back to after having tried all sorts
-   of themes that try to be well-nuanced, but ultimately aren't.
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package cyberpunk-theme
-     :ensure t
-     :config
-     (load-theme 'cyberpunk t)
-     )
    #+END_SRC
 
 ** Monokai +gnome madness
@@ -2623,15 +2485,6 @@ sudo gem install puppet-lint
       )
    #+END_SRC
 
-** Flatband theme
-   #+BEGIN_SRC emacs-lisp :tangle no
-   (use-package flatland-theme
-   :ensure t
-   :config
-   (load-theme 'flatland t)
-   )
-
-   #+END_SRC
 ** Org-mode Size settings
    Regardless of the theme i got used to having the org-headlines at certain sizes.
    #+BEGIN_SRC emacs-lisp :tangle no
