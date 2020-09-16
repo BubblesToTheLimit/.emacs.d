@@ -1394,7 +1394,9 @@ no keyword implies `:all'."
               (comment (nth 2 def)))
           (unless (and comment (stringp comment))
             (setq comment (format "Customized with use-package %s" name)))
-          `(customize-set-variable (quote ,variable) ,value ,comment)))
+          `(funcall (or (get (quote ,variable) 'custom-set) #'set-default)
+                    (quote ,variable)
+                    ,value)))
     args)
    (use-package-process-keywords name rest state)))
 
@@ -1561,7 +1563,9 @@ this file.  Usage:
 :load-path       Add to the `load-path' before attempting to load the package.
 :diminish        Support for diminish.el (if installed).
 :delight         Support for delight.el (if installed).
-:custom          Call `customize-set-variable' with each variable definition.
+:custom          Call `custom-set' or `set-default' with each variable
+                 definition without modifying the Emacs `custom-file'.
+                 (compare with `custom-set-variables').
 :custom-face     Call `customize-set-faces' with each face definition.
 :ensure          Loads the package using package.el if necessary.
 :pin             Pin the package to an archive."
