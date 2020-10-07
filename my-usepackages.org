@@ -2212,6 +2212,21 @@ sudo gem install puppet-lint
    (setq js-indent-level 2)
    #+END_SRC
 
+
+   #+BEGIN_SRC emacs-lisp
+(use-package flymake
+:ensure t
+)
+(use-package flymake-json
+:ensure t
+)
+(defun fbr/json-mode-before-save-hook ()
+  (when (eq major-mode 'json-mode)
+    (flymake-json-load)))
+(add-hook 'before-save-hook #'fbr/json-mode-before-save-hook)
+   #+END_SRC
+
+
 ** Editorconfig                                               :sysenv:
    There is a project which provides a coding style configuration accross editors called
    "Editorconfig": http://editorconfig.org/
