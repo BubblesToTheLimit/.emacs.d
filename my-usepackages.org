@@ -2551,6 +2551,15 @@ sudo gem install puppet-lint
 
   Former problem: use-package doesnt find spaceline-config or spaceline, doest this still exist?
 
+** Telephone Line
+   #+BEGIN_SRC emacs-lisp
+(use-package telephone-line
+  :ensure t
+  :config
+  (telephone-line-mode 1)
+  )
+   #+END_SRC
+
 ** Spaceline config
    Another modeline config taken from here: https://github.com/prassee/prassee-emacs-theme
    #+BEGIN_SRC emacs-lisp :tangle no
