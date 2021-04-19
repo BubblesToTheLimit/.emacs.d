@@ -2269,6 +2269,22 @@ sudo gem install puppet-lint
 (global-eldoc-mode -1)
    #+END_SRC
 
+
+   My attempt at linting.
+   Based on this blog post: https://blog.ironboundsoftware.com/2016/12/05/improving-your-python-pylint-and-flake8-emacs/
+   #+BEGIN_SRC emacs-lisp
+(use-package elpy
+  :ensure t
+  :init
+  (elpy-enable)
+  :config
+  (when (require 'flycheck nil t)
+    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+  )
+  (setq elpy-formatter "flake8")
+   #+END_SRC
+
 ** C Lang                                                     :sysenv:
   The main thing i use from the following is the "jump to definition" function, which is otherwise
   a tedious manual task.
