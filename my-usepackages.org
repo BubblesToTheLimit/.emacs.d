@@ -491,18 +491,27 @@ sudo apt-get install aspell-de
    warning about the old version of git that is probably installed on fresh systems i rather dont
    even use it.
    #+BEGIN_SRC emacs-lisp
-     ;; set the key-binding unconditionally for times when magit is not yet loaded yet due to the
-     ;; usepackage-defer option
-     (define-key global-map (kbd "C-c m") 'magit-status)
-     ;; Warning: The Windows User-Home needs to be in some kind of path such that magit finds the
-     ;; .gitconfig
-     (use-package magit
-       :ensure t
-       :config
-       (if (string-equal system-type "windows-nt") (add-to-list 'exec-path "C:/Program Files/Git/bin"))
-       (setenv "GIT_ASKPASS" "git-gui--askpass")
-       :defer 5
-       )
+;; set the key-binding unconditionally for times when magit is not yet loaded yet due to the
+;; usepackage-defer option
+(define-key global-map (kbd "C-c m") 'magit-status)
+;; Warning: The Windows User-Home needs to be in some kind of path such that magit finds the
+;; .gitconfig
+(use-package magit
+  :ensure t
+  :config
+  (if (string-equal system-type "windows-nt")
+      (progn
+        (add-to-list 'exec-path "C:/Program Files/Git/bin")
+        (setenv "GIT_ASKPASS" "git-gui--askpass")
+        )
+    )
+  (if (string-equal system-type "darwin")
+      (progn
+        (add-to-list 'exec-path "/usr/bin")
+        (setenv "GIT_SSH_COMMAND" "/usr/bin/ssh")
+        )
+    )
+  )
    #+END_SRC
 
 
