@@ -967,9 +967,11 @@ sudo apt-get install aspell-de
     #+BEGIN_SRC emacs-lisp
       (setq org-todo-keyword-faces
             '(("TODO" . org-warning)
-              ("PENDING" . (:foreground "#f0c674" :background "#d09216"))
+              ("PENDING" . (:foreground "#f0c674" :background nil))
               ("DELEGATED" . (:foreground "#81a2be" :background "#456887" :box (:line-width 1 :style none)))
-              ("CANCELED" . (:foreground "#b5bd68" :weight bold :box (:line-width 1 :style none)))))
+              ("CANCELED" . (:foreground "#b5bd68" :weight bold :box (:line-width 1 :style none)))
+              ("REVIEW" (:foreground "#A3FFE3" :background nil))
+              ))
     #+END_SRC
 
 *** Org-mode alerts and notifications
@@ -2073,6 +2075,7 @@ sudo apt-get install ess
    #+BEGIN_SRC emacs-lisp
 (setq hl-todo-keyword-faces
       '(("TODO"   . "#efe4a1")
+        ("BUGBUG"  . "#ff5faf")
         ("FIXME"  . "#ff5faf")
         ("DEBUG"  . "#1E90FF")
         ("GOTCHA" . "#1E90FF")
