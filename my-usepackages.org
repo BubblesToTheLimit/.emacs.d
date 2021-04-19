@@ -2343,16 +2343,31 @@ sudo gem install puppet-lint
   - oceanic-theme
   - solarized-theme
   - twilight-bright-theme
+  - spacegray-theme
+  - toxi-theme
 
 
   Current theme:
   #+BEGIN_SRC emacs-lisp
-  (use-package flatland-theme
+  (use-package tron-legacy-theme
   :ensure t
   :config
-  (load-theme 'flatland t)
+  (load-theme 'wheatgrass t)
   )
   #+END_SRC
+
+** Theme Looper
+   #+BEGIN_SRC emacs-lisp
+(use-package theme-looper
+  :ensure t
+  :config
+  (global-set-key (kbd "C-}") 'theme-looper-enable-next-theme)
+  (global-set-key (kbd "C-{") 'theme-looper-enable-previous-theme)
+  (global-set-key (kbd "C-\\") 'theme-looper-enable-random-theme)
+  (global-set-key (kbd "C-|") 'theme-looper-select-theme)
+  (global-set-key (kbd "C-M-|") 'theme-looper-select-theme-from-all)
+  )
+   #+END_SRC
 
 ** Rebecca theme
    #+BEGIN_SRC emacs-lisp :tangle no
