@@ -618,14 +618,17 @@ sudo apt-get install aspell-de
       (define-key global-map (kbd "<f10>") 'org-clock-goto)
     #+END_SRC
 
+
     Jump to beginning / end of heading by default (should make navigation faster once i get used
     to this)
     #+BEGIN_SRC emacs-lisp
       (setq org-special-ctrl-a/e t)
     #+END_SRC
 
+
     Truely global org-mode keybindings (taken from here:
     https://stackoverflow.com/questions/683425/globally-override-key-binding-in-emacs)
+
 
     Sadly i didnt get this to work with C-c C-x C-j, C-j always created a newline. However i think
     this is a good start, therefor im keeping this!
@@ -2248,7 +2251,6 @@ sudo gem install puppet-lint
 (add-hook 'before-save-hook #'fbr/json-mode-before-save-hook)
    #+END_SRC
 
-
 ** Editorconfig                                               :sysenv:
    There is a project which provides a coding style configuration accross editors called
    "Editorconfig": http://editorconfig.org/
@@ -2385,7 +2387,7 @@ sudo gem install puppet-lint
       '(("TODO" . org-warning)
         ("PENDING" :foreground "#87ffd7" :background nil :weight bold)
         ("DELEGATED" :foreground "#5fafff" :background "#456887" :box (:line-width 1 :style none))
-        ("REVIEW" :foreground "#87ffd7" :background nil)
+        ("REVIEW" :foreground "#A3FFE3" :background nil)
         ("CANCELED" :foreground "#b5bd68" :weight bold :box
          (:line-width 1 :style none))
          )
