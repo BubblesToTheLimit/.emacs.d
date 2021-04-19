@@ -2170,6 +2170,17 @@ sudo apt-get install ess
   (add-hook 'emacs-lisp-mode-hook 'highlight-sexp-mode)
    #+END_SRC
 
+** Markdown mode
+   #+BEGIN_SRC emacs-lisp
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+   #+END_SRC
+
 ** Flycheck for Puppet
    Taken from baron42bba's config: https://github.com/baron42bba/.emacs.d/blob/master/bba.org#flycheck
 
