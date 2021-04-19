@@ -656,6 +656,14 @@ sudo apt-get install aspell-de
             (add-to-list 'minor-mode-map-alist mykeys))))
     #+END_SRC
 
+
+    Explicitly enable the sourceblock shortcuts (i.e. automatically expanding "<s" to an org-mode
+    sourceblock). Once this worked out of the box, after an update I now need this.
+    #+begin_src emacs-lisp
+    (require 'org-tempo)
+    #+end_src
+
+
 *** Org-mode visual improvements
     Strike through DONE headlines
     #+BEGIN_SRC emacs-lisp
