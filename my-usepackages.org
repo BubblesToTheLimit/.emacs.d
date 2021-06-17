@@ -2360,10 +2360,10 @@ sudo gem install puppet-lint
 
   Current theme:
   #+BEGIN_SRC emacs-lisp
-  (use-package tron-legacy-theme
+  (use-package weyland-utani-theme
   :ensure t
   :config
-  (load-theme 'wheatgrass t)
+  (load-theme 'weyland-utani t)
   )
   #+END_SRC
 
